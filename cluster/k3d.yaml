@@ -1,0 +1,21 @@
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+metadata:
+  name: mycluster
+servers: 1
+kubeAPI:
+  hostIP: "127.0.0.1"
+  hostPort: "6445"
+registries:
+  create:
+    name: registry.localhost
+    host: "0.0.0.0"
+    hostPort: "5000"
+options:
+  k3d:
+    wait: true
+    timeout: "60s"
+    disableLoadbalancer: true
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true

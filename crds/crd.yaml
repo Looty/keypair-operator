@@ -1,0 +1,76 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: keypairs.keypair.looty.com
+spec:
+  group: keypair.looty.com
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          # x-kubernetes-validations:
+          #   - rule: "self.rotateFor < 0"
+          #     message: "rotateFor must be greater or equal to 0."
+          #   - rule: "self.replicas <= self.maxReplicas"
+          #     message: "replicas should be smaller than or equal to maxReplicas."
+          required:
+            - spec
+          properties:
+            spec:
+              type: object
+              properties:
+                roateAt:
+                  type: string
+                  pattern: '^(\d+|\*)(/\d+)?(\s+(\d+|\*)(/\d+)?){4}$'
+                  default: "* * * * *"
+                rotateFor:
+                  type: integer
+                  default: 0
+                  minimum: 0
+                privateKey:
+                  type: object
+                  default: {}
+                  properties:
+                    algorithm:
+                      type: string
+                      default: PKCS1
+                      enum:
+                        - PKCS1
+                        - PKCS8
+                        - Raw
+                        - OpenSSH
+                    encoding:
+                      type: string
+                      default: PEM
+                      enum:
+                        - PEM
+                        - DER
+                        - OpenSSH
+                        - Raw
+                        - X962
+                        - SMIME
+                    size:
+                      type: integer
+                      default: 2048
+      additionalPrinterColumns:
+        - name: RoateAt
+          type: string
+          description: The cron spec defining the interval to rotate keypair at
+          jsonPath: .spec.roateAt
+        - name: RoateFor
+          type: string
+          description: The number of times to rotate the keypair
+          jsonPath: .spec.rotateFor
+  scope: Namespaced
+  names:
+    kind: KeyPair
+    plural: keypairs
+    singular: keypair
+    shortNames:
+      - keypair
+      - kp
