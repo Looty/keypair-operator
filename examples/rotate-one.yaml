@@ -1,0 +1,11 @@
+apiVersion: keypair.looty.com/v1
+kind: KeyPair
+metadata:
+  name: rotate-one
+spec:
+  rotateAt: "* * * * *"
+  rotateFor: 1
+  privateKey:
+    algorithm: PKCS1
+    encoding: PEM
+    size: 2048
