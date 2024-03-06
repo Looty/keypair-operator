@@ -40,7 +40,7 @@ def on_create(body, patch, **kwargs):
     patch.spec["rotationIndex"] = rotate_for
 
 @kopf.on.update('keypair.looty.com', 'v1', 'keypair')
-def on_update(spec, status, namespace, logger, **kwargs):
+def on_update(body, meta, spec, status, old, new, diff, **kwargs):
     """On update callback"""
 
     pass
@@ -97,7 +97,7 @@ def on_timer(name, namespace, patch, spec, **kwargs):
         patch.spec["rotationIndex"] = rotate_for
 
 @kopf.on.delete('keypair.looty.com', 'v1', 'keypair')
-def on_delete(body, patch, **kwargs):
+def on_delete(body, meta, spec, status, **kwargs):
     """On delete callback"""
 
     pass
