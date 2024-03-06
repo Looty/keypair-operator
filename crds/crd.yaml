@@ -24,7 +24,7 @@ spec:
             spec:
               type: object
               properties:
-                roateAt:
+                rotateAt:
                   type: string
                   pattern: '^(\d+|\*)(/\d+)?(\s+(\d+|\*)(/\d+)?){4}$'
                   default: "* * * * *"
@@ -32,6 +32,9 @@ spec:
                   type: integer
                   default: 0
                   minimum: 0
+                rotationIndex:
+                  type: integer
+                  default: 0
                 privateKey:
                   type: object
                   default: {}
@@ -58,14 +61,30 @@ spec:
                       type: integer
                       default: 2048
       additionalPrinterColumns:
-        - name: RoateAt
+        - name: RotationCron
           type: string
           description: The cron spec defining the interval to rotate keypair at
-          jsonPath: .spec.roateAt
-        - name: RoateFor
+          jsonPath: .spec.rotateAt
+        - name: RotateFor
           type: string
           description: The number of times to rotate the keypair
           jsonPath: .spec.rotateFor
+        - name: RotationIndex
+          type: string
+          description: The next keypair rotation index to create or overwrite
+          jsonPath: .spec.rotationIndex
+        - name: Algorithm
+          type: string
+          description: The algorithm used to generate the private key
+          jsonPath: .spec.privateKey.algorithm
+        - name: Encoding
+          type: string
+          description: The encoding used to generate the private key
+          jsonPath: .spec.privateKey.encoding
+        - name: Size
+          type: string
+          description: The key size used to generate the private key
+          jsonPath: .spec.privateKey.size
   scope: Namespaced
   names:
     kind: KeyPair

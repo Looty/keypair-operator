@@ -1,0 +1,11 @@
+apiVersion: keypair.looty.com/v1
+kind: KeyPair
+metadata:
+  name: rotate-two
+spec:
+  rotateAt: "* * * * *"
+  rotateFor: 2
+  privateKey:
+    algorithm: PKCS1
+    encoding: PEM
+    size: 2048

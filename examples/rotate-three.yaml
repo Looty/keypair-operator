@@ -1,0 +1,11 @@
+apiVersion: keypair.looty.com/v1
+kind: KeyPair
+metadata:
+  name: rotate-three
+spec:
+  rotateAt: "* * * * *"
+  rotateFor: 3
+  privateKey:
+    algorithm: PKCS1
+    encoding: PEM
+    size: 2048
